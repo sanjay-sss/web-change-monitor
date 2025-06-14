@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Change Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        input,
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AI-Powered Web Change Monitor</h1>
+    <form id="add-website-form">
+        <input type="text" id="url" placeholder="Enter website URL" required>
+        <button type="submit">Add Website</button>
+    </form>
+    <h2>Monitored Websites</h2>
+    <table id="website-table">
+        <tr>
+            <th>URL</th>
+            <th>Current Hash</th>
+            <th>Last Content (Preview)</th>
+        </tr>
+    </table>
+
+    <script>
+        async function loadWebsites() {
+            const response = await fetch('/websites');
+            const websites = await response.json();
+            const table = document.getElementById('website-table');
+            while (table.rows.length > 1) table.deleteRow(1);
+            websites.forEach(website => {
+                const row = table.insertRow();
+                row.insertCell().textContent = website.url;
+                row.insertCell().textContent = website.hash || 'N/A';
+                row.insertCell().textContent = website.last_content ? website.last_content.slice(0, 50) + '...' : 'N/A';
+            });
+        }
+
+        document.getElementById('add-website-form').addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const url = document.getElementById('url').value;
+            const response = await fetch('/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `url=${encodeURIComponent(url)}`
+            });
+            const result = await response.json();
+            alert(result.message || result.error);
+            if (response.ok) {
+                document.getElementById('url').value = '';
+                loadWebsites();
+            }
+        });
+
+        window.onload = loadWebsites;
+    </script>
+</body>
+
+</html>
