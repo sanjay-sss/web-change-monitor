@@ -1,86 +1,124 @@
-AI-Powered Web Change Monitor & Summarizer
-A smart web monitoring tool that tracks changes in web content, detects updates using SHA256 hashing, and generates summaries of changes using OpenAI's API (mocked for demo). Built as a portfolio project to showcase full-stack development and integration with modern APIs.
-Features
+# 🧠 AI-Powered Web Change Monitor & Summarizer
 
-Add multiple websites for monitoring via a web interface.
-Detects content changes using SHA256 hashing.
-Sends alerts to the console when changes are detected.
-Generates summaries of changes using OpenAI API (mock implementation for demo).
-Stores website data in PostgreSQL.
+A smart web monitoring tool that tracks changes in web content, detects updates using SHA256 hashing, alerts users via console, and generates summaries of changes using OpenAI API. This project showcases full-stack development with a Flask backend, PostgreSQL database, and a simple HTML frontend, built as a portfolio piece.
 
-Tech Stack
+---
 
-Backend: Python, Flask
-Frontend: HTML
-Libraries:
-requests, hashlib, schedule
-BeautifulSoup, lxml for web scraping
-psycopg2 for PostgreSQL
+## ✨ Features
 
+- Add multiple websites for monitoring via a web interface.
+- Detects content changes using SHA256 hashing.
+- Sends alerts to the console when changes are detected.
+- Generates summaries of changes using a OpenAI API.
+- Stores website data in PostgreSQL for persistence.
+- Simple, clean frontend with a form and table for user interaction.
 
-Database: PostgreSQL
+---
 
-Setup Instructions
+## 🛠️ Tech Stack
 
-Clone the repository:git clone https://github.com/your-username/web-change-monitor.git
-cd web-change-monitor
-
-
-Create a virtual environment and install dependencies:python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+- **Backend**: Python, Flask  
+- **Frontend**: HTML  
+- **Libraries**:
+  - `requests`, `hashlib`, `schedule` for monitoring and change detection
+  - `BeautifulSoup`, `lxml` for web scraping
+  - `psycopg2` for PostgreSQL integration
+- **Database**: PostgreSQL  
 
 
-Set up PostgreSQL:
-Install PostgreSQL and create a database named webmonitor.
-Update environment variables in a .env file or shell:export DB_NAME=webmonitor
-export DB_USER=your_postgres_user
-export DB_PASSWORD=your_postgres_password
-export DB_HOST=localhost
-export DB_PORT=5432
-export OPENAI_API_KEY=your_openai_api_key
+---
 
+## 📁 Project Structure
 
-
-
-Run the application:python main.py
-
-
-Open your browser and navigate to http://localhost:5000.
-
-Usage
-
-Enter a website URL in the input field and click "Add Website".
-The system monitors added websites every 60 seconds for changes.
-Changes are detected via SHA256 hash comparison and logged to the console with a summary.
-View the list of monitored websites and their current hash/content preview in the table.
-
-Project Structure
+```
 web-change-monitor/
 ├── app/
 │   ├── monitor.py         # Handles website tracking & hashing
-│   ├── summarizer.py      # Mock OpenAI API summarizer
+│   ├── summarizer.py      #  OpenAI API summarizer
 │   ├── notifier.py        # Console alerts
 │   └── utils.py           # Helper functions
 ├── templates/
 │   └── index.html         # Frontend interface
 ├── main.py                # Entry point
 ├── requirements.txt       # Dependencies
-├── README.md              # This file
+├── .gitignore             # Git ignore file
+└── README.md              # This file
+```
 
-Deployment
+---
 
-Render/Vercel: Update main.py to bind to 0.0.0.0 and the provided port (e.g., os.environ.get('PORT')).
-Configure PostgreSQL on a cloud provider (e.g., Render's managed PostgreSQL).
-Set environment variables for DB_* and OPENAI_API_KEY in the deployment platform.
-For production, replace the mock OpenAI API call in summarizer.py with a real API request.
+## ⚙️ Setup Instructions
 
-Future Improvements
+### 1. Clone the Repository
 
-Replace mock OpenAI API with a real implementation.
-Add email notifications via SMTP.
-Enhance frontend with React for better interactivity.
-Support more advanced change detection (e.g., specific DOM elements).
+```bash
+git clone https://github.com/your-username/web-change-monitor.git
+cd web-change-monitor
+```
 
-License
-MIT License
+### 2. Create a Virtual Environment and Install Dependencies
+
+```bash
+python -m venv venv
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+### 3. Set Up PostgreSQL
+
+- Install PostgreSQL and create a database named `webmonitor`:
+```bash
+createdb webmonitor
+```
+
+### 4. Set Environment Variables
+
+**Option A: In terminal**
+```bash
+export DB_NAME=webmonitor
+export DB_USER=your_postgres_user
+export DB_PASSWORD=your_postgres_password
+export DB_HOST=localhost
+export DB_PORT=5432
+export OPENAI_API_KEY=sk-api-key-1234567890
+```
+
+**Option B: Create a `.env` file**
+```
+DB_NAME=webmonitor
+DB_USER=your_postgres_user
+DB_PASSWORD=your_postgres_password
+DB_HOST=localhost
+DB_PORT=5432
+OPENAI_API_KEY=sk-api-key-1234567890
+```
+
+### 5. Run the Application
+
+```bash
+python main.py
+```
+
+Open your browser and navigate to:  
+📍 `http://localhost:5000`
+
+---
+
+## 🚀 Usage
+
+- **Add Websites**: Enter a website URL (e.g., `https://example.com`) and click **"Add Website"**
+- **Monitor Changes**: System checks every 60 seconds using SHA256 hashing
+- **View Alerts**: Console shows changes + summary from  OpenAI API
+- **View Monitored Sites**: Table shows URLs, current hash, and recent content
+
+---
+
+## 🔮 Future Improvements
+- Add email alerts using SMTP
+- Build interactive frontend with React
+- Monitor specific HTML/DOM elements only
+---
